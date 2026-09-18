@@ -1,0 +1,25 @@
+# ROS / editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ROS / colcon (на будущее)
+build/
+install/
+log/
+.ros/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local secrets
+.env
+*.pem
