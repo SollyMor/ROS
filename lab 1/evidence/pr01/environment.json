@@ -1,0 +1,22 @@
+{
+  "launch_method": "native",
+  "os": {
+    "name": "Ubuntu",
+    "version": "24.04",
+    "source": "/etc/os-release"
+  },
+  "ros": {
+    "distro": "jazzy",
+    "source": "ros2 doctor --report"
+  },
+  "gazebo": {
+    "version": "replace-me",
+    "command": "gz sim --versions"
+  },
+  "rmw": "rmw_fastrtps_cpp",
+  "domains": {
+    "working": 16,
+    "broken": 17
+  },
+  "notes": "Replace placeholders with values from your machine. Do not paste secrets or a full env dump."
+}

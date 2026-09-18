@@ -1,0 +1,16 @@
+{
+  "practice_id": "PR01",
+  "title": "turtlesim graph and ROS_DOMAIN_ID",
+  "public_tests_passed": false,
+  "defect_reproduced": false,
+  "defect_fixed": false,
+  "tests": [
+    "turtlesim + turtle_teleop_key started on shared domain",
+    "node list / topic list / node info captured in graph.md",
+    "pose type and single echo recorded",
+    "topic hz /turtle1/pose measured >= 10s",
+    "teleop restarted on foreign domain; pose echo timed out (exit 124)",
+    "teleop returned to original domain; pose echo succeeded (exit 0)"
+  ],
+  "notes": "Set the three boolean flags to true only after the corresponding local checks succeed. Do not claim package/colcon tests — PR01 has no custom node."
+}

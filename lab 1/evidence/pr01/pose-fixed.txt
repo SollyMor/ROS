@@ -1,0 +1,3 @@
+# Заглушка. После стадии «доказать» сюда попадёт вывод:
+#   timeout 5s ros2 topic echo /turtle1/pose "$POSE_TYPE" --once
+# Ожидается поза черепахи и exit=0.
