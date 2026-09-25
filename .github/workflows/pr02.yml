@@ -1,0 +1,39 @@
+name: PR02 turtle_bringup
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup ROS 2 Jazzy
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: jazzy
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            ros-jazzy-turtlesim \
+            ros-jazzy-launch \
+            ros-jazzy-launch-ros
+
+      - name: Build turtle_bringup
+        shell: bash
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build --symlink-install --packages-select turtle_bringup
+
+      - name: Check installed sim.launch.py
+        shell: bash
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          test -f "$(ros2 pkg prefix turtle_bringup)/share/turtle_bringup/launch/sim.launch.py"
+          python3 -m py_compile src/turtle_bringup/launch/sim.launch.py

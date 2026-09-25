@@ -1,3 +1,33 @@
+# ROS course labs
+
+## PR02 — turtle_bringup launch
+
+Пакет `src/turtle_bringup` запускает готовый `turtlesim` через `sim.launch.py`.
+
+```bash
+source /opt/ros/jazzy/setup.bash
+cd "$(git rev-parse --show-toplevel)"
+colcon build --symlink-install --packages-select turtle_bringup
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+ros2 launch turtle_bringup sim.launch.py
+```
+
+Движение (другой терминал, тот же domain):
+
+```bash
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist \
+  '{linear: {x: 1.0}, angular: {z: 0.5}}'
+```
+
+Артефакты: `evidence/pr02/`. Проверка синтаксиса launch:
+
+```bash
+python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
+```
+
+---
+
 # PR01 — turtlesim и ROS_DOMAIN_ID
 
 ## Подготовка (три терминала)
