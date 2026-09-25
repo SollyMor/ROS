@@ -1,0 +1,16 @@
+{
+  "practice_id": "PR01",
+  "title": "turtlesim graph and ROS_DOMAIN_ID",
+  "public_tests_passed": true,
+  "defect_reproduced": true,
+  "defect_fixed": true,
+  "tests": [
+    "turtlesim + turtle_teleop_key on ROS_DOMAIN_ID=16",
+    "ros2 node list / topic list -t / node info /turtlesim",
+    "pose type turtlesim/msg/Pose; topic echo --once",
+    "topic hz /turtle1/pose ~12s ≈ 62.5 Hz",
+    "teleop+CLI on domain 17: only /teleop_turtle; pose echo exit=124",
+    "return to domain 16: both nodes; pose echo exit=0"
+  ],
+  "notes": "ROS_DOMAIN_ID applies at process start; re-export does not move a running node."
+}

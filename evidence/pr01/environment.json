@@ -2,7 +2,7 @@
   "launch_method": "native",
   "os": {
     "name": "Ubuntu",
-    "version": "24.04",
+    "version": "24.04.5 LTS",
     "source": "/etc/os-release"
   },
   "ros": {
@@ -10,13 +10,13 @@
     "source": "ros2 doctor --report"
   },
   "gazebo": {
-    "version": "replace-me",
-    "command": "gz sim --versions"
+    "version": null,
+    "command": "gz sim --versions",
+    "notes": "gz not installed"
   },
   "rmw": "rmw_fastrtps_cpp",
   "domains": {
     "working": 16,
     "broken": 17
-  },
-  "notes": "Replace placeholders with values from your machine. Do not paste secrets or a full env dump."
+  }
 }

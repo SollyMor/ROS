@@ -12,8 +12,8 @@ jobs:
 
       - name: Validate JSON
         run: |
-          python3 -m json.tool "lab 1/report.json" > /dev/null
-          python3 -m json.tool "lab 1/evidence/pr01/environment.json" > /dev/null
+          python3 -m json.tool report.json > /dev/null
+          python3 -m json.tool evidence/pr01/environment.json > /dev/null
 
       - name: Evidence completeness
-        run: python3 "lab 1/scripts/check_pr01.py"
+        run: python3 scripts/check_pr01.py

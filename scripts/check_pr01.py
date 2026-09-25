@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal PR01 completeness check (local stand-in for course-kit checker)."""
+"""Minimal PR01 completeness check."""
 
 from __future__ import annotations
 
@@ -60,11 +60,17 @@ def main() -> None:
         fail("report.json.tests must be a non-empty list")
 
     doctor = (EVIDENCE / "doctor.txt").read_text(encoding="utf-8").strip()
-    if len(doctor) < 40 or doctor.startswith("# Замените"):
-        print("WARN: doctor.txt still looks like a stub — replace after ros2 doctor --report")
+    if len(doctor) < 40:
+        fail("doctor.txt looks empty or stub")
+
+    broken = (EVIDENCE / "pose-broken.txt").read_text(encoding="utf-8")
+    fixed = (EVIDENCE / "pose-fixed.txt").read_text(encoding="utf-8")
+    if "exit=124" not in broken:
+        fail("pose-broken.txt must record exit=124")
+    if "exit=0" not in fixed:
+        fail("pose-fixed.txt must record exit=0")
 
     print("OK: PR01 evidence layout and JSON look complete")
-    print("Note: set report flags to true only after you run the live ROS checks.")
 
 
 if __name__ == "__main__":
