@@ -1,0 +1,18 @@
+{
+  "practice_id": "PR02",
+  "title": "turtle_bringup launch and cmd_vel delivery",
+  "commit": "7a56f397b9d10573627e58773dc9c63cc9b45bb4",
+  "public_tests_passed": true,
+  "defect_reproduced": true,
+  "defect_fixed": true,
+  "tests": [
+    "colcon build turtle_bringup (empty then with launch)",
+    "ros2 pkg prefix finds install/turtle_bringup",
+    "ros2 launch turtle_bringup sim.launch.py starts /turtlesim",
+    "Ctrl+C stops launch and closes turtlesim",
+    "ros2 topic pub --once /turtle1/cmd_vel Twist moves turtle",
+    "pub to /cmd_vel: publisher visible, subscription count 0, no motion",
+    "pub to /turtle1/cmd_vel: delivery to turtlesim, motion resumes"
+  ],
+  "notes": "Correct Twist type is not enough: full topic name must match for delivery. Discovery shows the publisher; delivery needs a matching subscriber."
+}
