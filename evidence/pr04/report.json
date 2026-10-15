@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR04",
+  "commit": "0d646353ae9e651d1626e0764a4cd379325eda57",
+  "course_kit": {
+    "version": "v1-w06",
+    "archive_sha256": "6eda53e1c566f7f0a7e09d7afe1e5a6f3b98397175a7e57dede9a84c6d14d0fe"
+  },
+  "commands": [
+    "python3 -m pytest src/patrol/test",
+    "ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel",
+    "ros2 param set /patrol publish_hz 5.0",
+    "ros2 topic hz /turtle1/cmd_vel",
+    "ros2 param set /patrol publish_hz 0.0",
+    "ros2 service call /clear std_srvs/srv/Empty",
+    "ros2 action list -t",
+    "python3 .course-kit/v1/tools/check_practice.py PR04 --submission ."
+  ],
+  "tests": [
+    {
+      "name": "pytest validate_publish_hz accepts 5.0",
+      "status": "passed"
+    },
+    {
+      "name": "pytest validate_publish_hz rejects 0 / negative / NaN",
+      "status": "passed"
+    },
+    {
+      "name": "pytest timer_period(0) raises ZeroDivisionError",
+      "status": "passed"
+    },
+    {
+      "name": "ros2 param set publish_hz 5.0 changes stream ≈5 Hz",
+      "status": "passed"
+    },
+    {
+      "name": "ros2 param set publish_hz 0.0 rejected; value stays 5.0",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "Без проверки частоты timer_period(0.0) → ZeroDivisionError: float division by zero при пересоздании таймера.",
+    "root_cause": "Период таймера считается как 1/publish_hz; ноль не является допустимой частотой и разрушает активное состояние, если не отклонить параметр до изменения таймера.",
+    "proof_after": "ros2 param set /patrol publish_hz 0.0 → Setting parameter failed: publish_hz must be in [1.0, 30.0] Hz; ros2 param get остаётся 5.0; поток команд сохраняется."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}

@@ -1,0 +1,9 @@
+.........s..                                                             [100%]
+11 passed, 1 skipped in 0.44s
+
+# Live checks (see parameters.md):
+# - ros2 param set /patrol publish_hz 5.0 → successful; hz ≈ 5.0
+# - ros2 param set /patrol publish_hz 0.0 → failed; value remains 5.0
+# - NaN via Parameter API → rejected: must be a finite number
+# - timer_period(0.0) without check → ZeroDivisionError
+# - ros2 service call /clear; ros2 action list -t → /turtle1/rotate_absolute
