@@ -1,5 +1,26 @@
 # ROS course labs
 
+## PR04 — patrol parameters
+
+Параметры `linear_speed`, `turn_rate`, `publish_hz` управляют командой и таймером.
+Недопустимый `publish_hz` (0, отрицательный, NaN) отклоняется; частота и поток сохраняются.
+
+```bash
+source /opt/ros/jazzy/setup.bash
+cd "$(git rev-parse --show-toplevel)"
+colcon build --symlink-install --packages-select patrol
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+python3 -m pytest src/patrol/test
+ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel
+ros2 param set /patrol publish_hz 5.0
+ros2 param set /patrol publish_hz 0.0
+```
+
+Артефакты: `evidence/pr04/`.
+
+---
+
 ## PR03 — patrol node (pose + cmd_vel)
 
 Пакет `src/patrol`: подписка на `/turtle1/pose`, таймер 0.1 с, публикация `Twist`
