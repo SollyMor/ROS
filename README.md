@@ -1,5 +1,30 @@
 # ROS course labs
 
+## PR03 — patrol node (pose + cmd_vel)
+
+Пакет `src/patrol`: подписка на `/turtle1/pose`, таймер 0.1 с, публикация `Twist`
+в относительный `cmd_vel`. Нужен remap на `/turtle1/cmd_vel`.
+
+```bash
+source /opt/ros/jazzy/setup.bash
+cd "$(git rev-parse --show-toplevel)"
+colcon build --symlink-install --packages-select patrol
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+python3 -m pytest src/patrol/test
+ros2 launch turtle_bringup sim.launch.py
+# другой терминал:
+ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel
+```
+
+Артефакты: `evidence/pr03/`. Checker:
+
+```bash
+python3 .course-kit/v1/tools/check_practice.py PR03 --submission .
+```
+
+---
+
 ## PR02 — turtle_bringup launch
 
 Пакет `src/turtle_bringup` запускает готовый `turtlesim` через `sim.launch.py`.

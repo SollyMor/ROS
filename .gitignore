@@ -23,4 +23,9 @@ Thumbs.db
 # Local secrets
 .env
 *.pem
+
+# Course kit (download per week; do not commit)
 .course-kit/
+robotics-course-kit-*.tar.gz
+robotics-course-kit-*.sha256.txt
+course-kit.tar.gz
