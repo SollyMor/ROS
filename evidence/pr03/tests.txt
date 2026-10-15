@@ -1,0 +1,13 @@
+..s..                                                                    [100%]
+4 passed, 1 skipped in 0.33s
+
+# Details
+# - test_command.py::test_twist_without_pose_is_zero  PASSED
+# - test_command.py::test_twist_with_pose_uses_patrol_speeds  PASSED
+# - test_copyright.py::test_copyright  SKIPPED (no copyright headers yet)
+# - test_flake8.py::test_flake8  PASSED
+# - test_pep257.py::test_pep257  PASSED
+#
+# Live graph checks (see demo.md):
+# - without remap: /cmd_vel pub=1 sub=0; pose unchanged
+# - with -r cmd_vel:=/turtle1/cmd_vel: delivery; pose moves; hz ≈ 10.0

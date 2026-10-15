@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR03",
+  "commit": "bbbeb70385ca521422cbc50a857904f3f1e9ac46",
+  "course_kit": {
+    "version": "v1-w06",
+    "archive_sha256": "6eda53e1c566f7f0a7e09d7afe1e5a6f3b98397175a7e57dede9a84c6d14d0fe"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-select patrol",
+    "python3 -m pytest src/patrol/test",
+    "ros2 run turtlesim turtlesim_node",
+    "ros2 run patrol patrol",
+    "ros2 topic info /cmd_vel --verbose",
+    "ros2 topic info /turtle1/cmd_vel --verbose",
+    "ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel",
+    "ros2 topic hz /turtle1/cmd_vel",
+    "python3 .course-kit/v1/tools/check_practice.py PR03 --submission ."
+  ],
+  "tests": [
+    {
+      "name": "pytest twist_from_pose without pose",
+      "status": "passed"
+    },
+    {
+      "name": "pytest twist_from_pose with pose",
+      "status": "passed"
+    },
+    {
+      "name": "flake8 patrol package",
+      "status": "passed"
+    },
+    {
+      "name": "pep257 patrol package",
+      "status": "passed"
+    },
+    {
+      "name": "cmd_vel hz ≈ 10 Hz with remap",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "ros2 run patrol patrol без remap: publisher на /cmd_vel (sub=0), turtlesim на /turtle1/cmd_vel (pub=0); поза x=y=5.544… не меняется.",
+    "root_cause": "Относительное имя cmd_vel резолвится в /cmd_vel, а turtlesim подписан на /turtle1/cmd_vel — совпадает тип Twist, но не полное имя топика, поэтому доставки нет.",
+    "proof_after": "ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel: pub и sub на /turtle1/cmd_vel; поза меняется (linear_velocity=0.5, angular_velocity=0.3); ros2 topic hz ≈ 10.0 Hz."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}
