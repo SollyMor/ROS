@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR05",
+  "commit": "f7dafbb8f4a66b6984fc799be52951fad5daa164",
+  "course_kit": {
+    "version": "v1-w06",
+    "archive_sha256": "6eda53e1c566f7f0a7e09d7afe1e5a6f3b98397175a7e57dede9a84c6d14d0fe"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-select patrol course_bringup",
+    "python3 -m pytest src/patrol/test",
+    "python3 -m pytest src/course_bringup/test",
+    "ros2 launch course_bringup patrol.launch.py namespace:=robot_a subscriber_reliability:=reliable record:=false",
+    "timeout 5s ros2 topic echo /robot_a/sensor_pose --no-daemon --spin-time 2 --qos-reliability reliable --once",
+    "ros2 launch course_bringup patrol.launch.py namespace:=robot_a subscriber_reliability:=best_effort record:=false",
+    "timeout 5s ros2 topic echo /robot_a/sensor_pose --no-daemon --spin-time 2 --qos-reliability best_effort --once",
+    "ros2 bag record -s mcap -o evidence/pr05/bag --topics /robot_a/sensor_pose",
+    "ros2 bag play evidence/pr05/bag --qos-profile-overrides-path config/qos-overrides.yaml",
+    "ros2 bag info evidence/pr05/bag",
+    "python3 .course-kit/v1/tools/check_practice.py PR05 --submission ."
+  ],
+  "tests": [
+    {
+      "name": "pytest patrol package",
+      "status": "passed"
+    },
+    {
+      "name": "launch test /robot_a/sensor_pose and /turtle1/cmd_vel, clean exit",
+      "status": "passed"
+    },
+    {
+      "name": "reliable echo of /robot_a/sensor_pose times out (RELIABILITY)",
+      "status": "passed"
+    },
+    {
+      "name": "best_effort echo receives turtlesim/msg/Pose",
+      "status": "passed"
+    },
+    {
+      "name": "mcap bag contains one topic /robot_a/sensor_pose",
+      "status": "passed"
+    },
+    {
+      "name": "replay with qos-overrides: best_effort delivers, reliable does not",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "ros2 topic echo /robot_a/sensor_pose --qos-reliability reliable --once: топик обнаружен, сообщений нет. WARN: incompatible QoS, Last incompatible policy: RELIABILITY.",
+    "root_cause": "pose_relay публикует sensor_pose с Reliability BEST_EFFORT. Подписчик RELIABLE несовместим с таким издателем: DDS показывает топик, но доставки нет.",
+    "proof_after": "subscriber_reliability:=best_effort: echo печатает Pose (x, y, theta, linear_velocity, angular_velocity). ros2 bag info: один поток /robot_a/sensor_pose, 701 сообщений, turtlesim/msg/Pose. Replay с config/qos-overrides.yaml (best_effort) отдаёт Pose; повторный reliable echo на той же записи снова получает RELIABILITY."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true,
+    "replay_verified": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}

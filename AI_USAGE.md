@@ -28,3 +28,12 @@ verification: colcon build; ros2 launch turtle_bringup sim.launch.py; ros2 topic
 - Затронутые компоненты: параметры `patrol`, валидация `publish_hz`/`linear_speed`/`turn_rate`, пересоздание таймера, тесты, `evidence/pr04`, workflow `pr04.yml`
 - Характер помощи: параметризация ноды, отклонение недопустимой частоты, оформление evidence и CI
 - Как результат был проверен независимо: `python3 -m pytest src/patrol/test`; `ros2 param set` 5.0 / 0.0 / −1 / NaN; `ros2 topic hz`; `/clear` и `ros2 action list -t`; `check_practice.py PR04`
+
+## PR05
+
+- Использован ИИ: да (`ai_used: true` в отчёте этой ПР).
+- Модель и версия: Grok 4.7 (Cursor Agent)
+- Среда или интерфейс агента: Cursor IDE
+- Затронутые компоненты: пакет `course_bringup` (launch с namespace, remap, `IfCondition` для MCAP), `pose_relay` / `pose_subscriber`, QoS best_effort против reliable, `evidence/pr05`, workflow `pr05.yml`
+- Характер помощи: launch-файл и ноды реле/подписчика, launch-тест с чистым завершением, съём qos-before/qos-after и проверка replay записи
+- Как результат был проверен независимо: `python3 -m pytest src/patrol/test`; `python3 -m pytest src/course_bringup/test`; `ros2 launch course_bringup patrol.launch.py` в `/robot_a`; `ros2 topic echo` reliable (timeout, RELIABILITY) и best_effort (Pose); `ros2 bag info` — один топик `/robot_a/sensor_pose`; replay с `config/qos-overrides.yaml`; `check_practice.py PR05`

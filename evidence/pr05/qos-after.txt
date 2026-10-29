@@ -1,0 +1,37 @@
+[WARN] [1793261066.011155109] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793261066.011293320] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+x: 4.886447906494141
+y: 8.744102478027344
+theta: -2.740755796432495
+linear_velocity: 0.5
+angular_velocity: 0.30000001192092896
+---
+
+## ros2 bag info (recorded /robot_a/sensor_pose)
+
+Files:             bag_0.mcap
+Bag size:          53.2 KiB
+Storage id:        mcap
+ROS Distro:        jazzy
+Duration:          11.200319490s
+Start:             Oct 29 2026 14:57:55.848117062 (1793260675.848117062)
+End:               Oct 29 2026 14:58:07.048436552 (1793260687.048436552)
+Messages:          701
+Topic information: Topic: /robot_a/sensor_pose | Type: turtlesim/msg/Pose | Count: 701 | Serialization Format: cdr
+Service:           0
+Service information: 
+
+## replay with config/qos-overrides.yaml
+### reliable echo (expect timeout / no message)
+[WARN] [1793260696.059448861] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793260696.059513158] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[WARN] [1793260698.538819159] [_ros2cli_10926]: New publisher discovered on topic '/robot_a/sensor_pose', offering incompatible QoS. No messages will be received from it. Last incompatible policy: RELIABILITY
+### best_effort echo (expect pose)
+[WARN] [1793260696.059192678] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793260696.059300047] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+x: 6.704008102416992
+y: 8.40438175201416
+theta: 2.3664000034332275
+linear_velocity: 0.5
+angular_velocity: 0.30000001192092896
+---
