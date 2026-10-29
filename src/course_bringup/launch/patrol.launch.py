@@ -32,7 +32,7 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument(
             'subscriber_reliability',
             default_value='best_effort',
-            description="pose_subscriber reliability: reliable or best_effort",
+            description='pose_subscriber reliability: reliable or best_effort',
         ),
         LogInfo(msg=['course_bringup: namespace=', namespace,
                      ' record=', record,

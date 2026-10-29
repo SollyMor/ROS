@@ -1,6 +1,7 @@
 """Subscribe to relative sensor_pose with configurable reliability."""
 
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
 from turtlesim.msg import Pose
@@ -50,7 +51,7 @@ def main(args=None) -> None:
     node = PoseSubscriber()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
         node.destroy_node()

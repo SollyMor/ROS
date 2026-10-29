@@ -13,6 +13,7 @@ from patrol.command import (
 )
 from rcl_interfaces.msg import SetParametersResult
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from rclpy.parameter import Parameter
 from turtlesim.msg import Pose
@@ -113,7 +114,7 @@ def main(args=None) -> None:
     node = Patrol()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
         node.destroy_node()

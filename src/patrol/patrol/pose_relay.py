@@ -1,6 +1,7 @@
 """Relay /turtle1/pose to relative sensor_pose with best_effort QoS."""
 
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
 from turtlesim.msg import Pose
@@ -34,7 +35,7 @@ def main(args=None) -> None:
     node = PoseRelay()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
         node.destroy_node()

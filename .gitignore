@@ -26,6 +26,9 @@ Thumbs.db
 
 # Course kit (download per week; do not commit)
 .course-kit/
+
+# Recorded MCAP stays local; the submission keeps bag-metadata.yaml
+evidence/pr05/bag/
 robotics-course-kit-*.tar.gz
 robotics-course-kit-*.sha256.txt
 course-kit.tar.gz
