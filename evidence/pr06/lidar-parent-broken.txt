@@ -1,0 +1,11 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________ test_lidar_parent_is_base_link ________________________
+src/course_description/test/test_vehicle_urdf.py:67: in test_lidar_parent_is_base_link
+    assert joint.find('parent').attrib['link'] == 'base_link'
+E   AssertionError: assert 'camera_link' == 'base_link'
+E     - base_link
+E     + camera_link
+=========================== short test summary info ============================
+FAILED src/course_description/test/test_vehicle_urdf.py::test_lidar_parent_is_base_link
+1 failed in 0.15s
